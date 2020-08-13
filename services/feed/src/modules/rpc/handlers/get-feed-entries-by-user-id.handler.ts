@@ -3,6 +3,7 @@ import { Nack, RabbitRPC } from '@golevelup/nestjs-rabbitmq';
 import { FeedService } from '../../feed/feed.service';
 import { FeedExchange } from '../../rabbit-mq/exchanges/feed-exchanges.const';
 import { UserFeedEntryResponse } from '../../feed/user-feed-entry.response';
+import { UserFeedService } from '../../user-feed/user-feed.service';
 
 type GetFeedEntriesByUserIdCommand = {
   userId: string;
@@ -14,7 +15,7 @@ type GetFeedEntriesByUserIdResponse = {
 
 @Injectable()
 export class GetFeedEntriesByUserIdHandler {
-  constructor(private readonly feedService: FeedService) {}
+  constructor(private readonly userFeedService: UserFeedService) {}
 
   @RabbitRPC({
     exchange: FeedExchange.name,
@@ -27,7 +28,7 @@ export class GetFeedEntriesByUserIdHandler {
     GetFeedEntriesByUserIdResponse | Nack
   > {
     try {
-      const feedEntries = await this.feedService.findByUserId(userId);
+      const feedEntries = await this.userFeedService.findUserLatestFeed(userId);
       return {
         feedEntries: UserFeedEntryResponse.fromMany(feedEntries),
       };

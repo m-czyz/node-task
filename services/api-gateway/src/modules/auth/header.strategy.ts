@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { authHeader } from './auth-header.const';
-import { isUUID } from '@nestjs/common/utils/is-uuid';
+import { validate } from 'class-validator';
 
 @Injectable()
 export class HeaderStrategy extends PassportStrategy(Strategy) {
@@ -18,11 +18,6 @@ export class HeaderStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(userId: string): Promise<any> {
-    // if (!isUUID(userId)) {
-    //   throw new BadRequestException(
-    //     `"${authHeader}" header value should be valid  string`,
-    //   );
-    // }
     const user = await this.authService.validateUser(userId);
     if (!user) {
       throw new UnauthorizedException();

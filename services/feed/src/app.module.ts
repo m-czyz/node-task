@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { RpcModule } from './modules/rpc/rpc.module';
 import { CommandModule } from './modules/command/command.module';
-import { FeedEntryModule } from './modules/feed-entry/feed-entry.module';
-import { FeedModule } from './modules/feed/feed.module';
 import { ExpressCassandraModule } from '@iaminfinity/express-cassandra';
 
 @Module({
@@ -12,17 +10,12 @@ import { ExpressCassandraModule } from '@iaminfinity/express-cassandra';
     ExpressCassandraModule.forRootAsync({
       useFactory: () => ({
         clientOptions: {
-          keyspace: 'feed',
-          contactPoints: ['feed-database'],
-        },
-        ormOptions: {
-          migration: 'drop',
+          keyspace: process.env.CASSANDRA_HOST_KEYSPACE,
+          contactPoints: [process.env.CASSANDRA_HOST],
         },
       }),
     }),
     CommandModule,
-    FeedEntryModule,
-    FeedModule,
     RpcModule,
   ],
   controllers: [],

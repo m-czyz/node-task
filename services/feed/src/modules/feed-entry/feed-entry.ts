@@ -25,11 +25,6 @@ export class FeedEntry {
   imageUrl: string;
 
   @Column({
-    type: 'text',
-  })
-  creatorId: string;
-
-  @Column({
     type: 'timeuuid',
   })
   createdAt: types.TimeUuid;

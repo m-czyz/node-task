@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { FeedEntry } from '../feed-entry/feed-entry';
 import {
+  FindQuery,
   InjectRepository,
   Repository,
   timeuuid,
@@ -13,15 +14,25 @@ export class FeedService {
     private readonly feedEntryRepository: Repository<FeedEntry>,
   ) {}
 
-  findByUserId(userId: string): Promise<FeedEntry[]> {
-    return this.feedEntryRepository
-      .find({
-        userId,
-        createdAt: {
-          $gt: timeuuid(new Date("2017-08-12T23:12:29.216Z")),
-        },
-      })
-      .toPromise();
+  findByUserIdAndCreatedAt(
+    userId: string,
+    createdAt?: Date,
+  ): Promise<FeedEntry[]> {
+    const query: FindQuery<FeedEntry> = {
+      userId,
+    };
+
+    if (createdAt) {
+      query.createdAt = {
+        $gt: timeuuid(createdAt),
+      };
+    }
+
+    return this.feedEntryRepository.find(query).toPromise();
+  }
+
+  createNew(feedEntry: FeedEntry): Promise<FeedEntry> {
+    return this.feedEntryRepository.save(feedEntry).toPromise();
   }
 
   async loadMultiple(

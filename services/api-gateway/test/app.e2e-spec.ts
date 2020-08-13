@@ -15,9 +15,26 @@ describe('FeedController (e2e)', () => {
     await app.init();
   });
 
-  it('/feed (GET)', () => {
+  it('/feed (GET) and should fail on auth', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .get('/feed')
+      .set('user', 'xxx')
       .expect(401);
+  });
+
+  it('/feed (GET) and get two feed entries', () => {
+    return request(app.getHttpServer())
+      .get('/feed')
+      .set('user', '5f34142611b9d42ca2d51d34')
+      .expect(200)
+      .expect(res => expect(res.body.length).toBe(2));
+  });
+
+  it('/feed (GET) and get zero feed entries', () => {
+    return request(app.getHttpServer())
+      .get('/feed')
+      .set('user', '5f34142611b9d42ca2d51d34')
+      .expect(200)
+      .expect(res => expect(res.body.length).toBe(0));
   });
 });

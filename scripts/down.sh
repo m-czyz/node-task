@@ -9,5 +9,8 @@ docker-compose down
 cd "$repo"/services/api-gateway
 docker-compose down
 
+cd "$repo"/services/feed
+docker-compose down
+
 cd "$repo"
 docker-compose down

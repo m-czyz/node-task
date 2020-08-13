@@ -1,5 +1,3 @@
-process.env.DEBUG="express-cassandra";
-
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 

@@ -19,7 +19,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "fixtures:load": "ts-node -r tsconfig-paths/register src/console.ts fixtures"
+    "fixtures:load": "ts-node -r tsconfig-paths/register src/console.ts fixtures",
+    "feed-entry:random": "ts-node -r tsconfig-paths/register src/console.ts feed-entry:random"
   },
   "dependencies": {
     "@golevelup/nestjs-rabbitmq": "^1.15.1",
