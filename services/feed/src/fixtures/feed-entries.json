@@ -1,0 +1,20 @@
+[
+  {
+    "id": "f205e44d-e492-45a9-99ce-fe46a2f089ee",
+    "userId": "5f34142611b9d42ca2d51d34",
+    "postId": "15cf05a4-1181-4b05-b643-0392edb55cf4",
+    "imageUrl": "https://via.placeholder.com/150",
+    "creatorId": "5f34143a50477c4bc7c2d2ec",
+    "seenAt": null,
+    "createdAt": "2020-08-12T23:12:29.216Z"
+  },
+  {
+    "id": "3ae04684-4195-45d0-8256-e668c918abcb",
+    "userId": "5f34142611b9d42ca2d51d34",
+    "postId": "8894b82b-baea-453a-959e-fc7b0eb3dece",
+    "imageUrl": "https://via.placeholder.com/200",
+    "creatorId": "5f34143a50477c4bc7c2d2ec",
+    "seenAt": null,
+    "createdAt": "2020-08-12T23:12:29.216Z"
+  }
+]

@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { UserModule } from '../user/user.module';
 import { ConsoleModule } from 'nestjs-console';
+import { FeedModule } from '../feed/feed.module';
 import { LoadFixturesCommand } from './commands/load-fixtures.command';
 
 @Module({
-  imports: [ConsoleModule, UserModule],
+  imports: [ConsoleModule, FeedModule],
   providers: [LoadFixturesCommand],
 })
 export class CommandModule {}

@@ -23,7 +23,6 @@ export class GetUserByIdHandler {
   public async getUserById({
     userId,
   }: GetUserByIdCommand): Promise<GetUserByIdResponse | Nack> {
-    console.log(userId);
     try {
       const user = await this.userService.findOneById(userId);
 

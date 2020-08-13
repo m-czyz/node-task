@@ -6,7 +6,8 @@ import {
 } from '@nestjs/common';
 import { IUser } from '../auth/user.interface';
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
-import { GetUserResponse } from './ get-user.response';
+import { UsersExchange } from '../rabbit-mq/exchanges/users-exchanges.const';
+import { GetUserResponse } from './get-user.response';
 
 @Injectable()
 export class UsersService {
@@ -14,10 +15,8 @@ export class UsersService {
 
   async findByUserId(userId: string): Promise<IUser> {
     try {
-      const {
-        user,
-      } = await this.amqpConnection.request<GetUserResponse>({
-        exchange: 'users',
+      const { user } = await this.amqpConnection.request<GetUserResponse>({
+        exchange: UsersExchange.name,
         routingKey: 'rpc-route',
         payload: {
           userId,

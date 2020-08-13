@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  feed:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - feed-network
+      - app-network
+    command: npm run start:dev
+    env_file:
+      - .env
+    depends_on:
+      - "feed-database"
+
+  feed-database:
+    image: cassandra
+    ports:
+      - "9042:9042"
+    networks:
+      - feed-network
+      - feed-worker-network
+
+networks:
+  feed-network:
+  feed-worker-network:
+    name: feed-worker-network
+  app-network:
+    external:
+      name: app-network

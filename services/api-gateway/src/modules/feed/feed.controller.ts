@@ -11,7 +11,6 @@ export class FeedController {
   @Get()
   @UseGuards(HeaderAuthGuard)
   getUserFeed(@User() user: IUser) {
-    const feed = this.feedService.getUserFeed();
-    return {};
+    return this.feedService.getUserFeed(user.id);
   }
 }

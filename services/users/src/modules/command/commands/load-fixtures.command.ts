@@ -4,16 +4,16 @@ import * as usersFixtures from '../../../fixtures/user.json';
 import { User } from '../../user/user.schema';
 
 @Console()
-export class LoadUserFixturesCommand {
+export class LoadFixturesCommand {
   constructor(private readonly userService: UserService) {}
 
   @Command({
-    command: 'fixtures:user',
-    description: 'Load user fixtures',
+    command: 'fixtures',
+    description: 'Load fixtures',
   })
-  async loadUserFixtures(): Promise<void> {
+  async loadFixtures(): Promise<void> {
     const spin = createSpinner();
-    spin.start(`Loading fixtures for users`);
+    spin.start(`Loading fixtures`);
 
     const users = await this.userService.loadMultiple(
       usersFixtures as User[],
