@@ -1,25 +1,17 @@
-import {
-  Entity,
-  Column,
-  CreateDateColumn, IndexColumn
-} from "@iaminfinity/express-cassandra";
+import { Entity, Column, IndexColumn } from '@iaminfinity/express-cassandra';
 import { types } from 'cassandra-driver';
 
 @Entity({
   table_name: 'feed_entry',
-  key: ['id'],
+  key: ['userId', 'createdAt'],
+  clustering_order: {
+    createdAt: 'desc',
+  },
 })
 export class FeedEntry {
   @Column({
-    type: 'uuid',
-    default: { $db_function: 'uuid()' },
-  })
-  id: types.Uuid;
-
-  @Column({
     type: 'text',
   })
-  @IndexColumn()
   userId: string;
 
   @Column({
@@ -38,10 +30,7 @@ export class FeedEntry {
   creatorId: string;
 
   @Column({
-    type: 'timestamp',
+    type: 'timeuuid',
   })
-  seenAt: Date | null;
-
-  @CreateDateColumn()
-  createdAt: Date;
+  createdAt: types.TimeUuid;
 }

@@ -1,0 +1,1 @@
+docker-compose exec feed npm run fixtures:load

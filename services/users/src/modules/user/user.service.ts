@@ -20,8 +20,4 @@ export class UserService {
     }
     return this.userModel.insertMany(users);
   }
-
-  getAll(): Promise<User[]> {
-    return this.userModel.find({}).exec();
-  }
 }

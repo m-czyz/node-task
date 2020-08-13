@@ -1,15 +1,15 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Nack, RabbitRPC } from '@golevelup/nestjs-rabbitmq';
-import { FeedResponse } from '../../feed/feed.response';
 import { FeedService } from '../../feed/feed.service';
 import { FeedExchange } from '../../rabbit-mq/exchanges/feed-exchanges.const';
+import { UserFeedEntryResponse } from '../../feed/user-feed-entry.response';
 
 type GetFeedEntriesByUserIdCommand = {
   userId: string;
 };
 
 type GetFeedEntriesByUserIdResponse = {
-  feedEntries: FeedResponse;
+  feedEntries: UserFeedEntryResponse[];
 };
 
 @Injectable()
@@ -28,9 +28,8 @@ export class GetFeedEntriesByUserIdHandler {
   > {
     try {
       const feedEntries = await this.feedService.findByUserId(userId);
-      console.log(feedEntries);
       return {
-        feedEntries,
+        feedEntries: UserFeedEntryResponse.fromMany(feedEntries),
       };
     } catch (error) {
       Logger.log(error.message, error.stack);

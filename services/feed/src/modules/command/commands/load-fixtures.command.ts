@@ -1,7 +1,8 @@
 import { Console, Command, createSpinner } from 'nestjs-console';
-import { FeedEntry } from '../../feed-entry/feed-entry';
 import { FeedService } from '../../feed/feed.service';
-import { uuid } from '@iaminfinity/express-cassandra';
+import { timeuuid, uuid } from '@iaminfinity/express-cassandra';
+
+import * as rawFeedEntriesFixtures from '../../../fixtures/feed-entries.json';
 
 @Console()
 export class LoadFixturesCommand {
@@ -14,19 +15,13 @@ export class LoadFixturesCommand {
   async loadFixtures(): Promise<void> {
     const spin = createSpinner();
     spin.start(`Loading fixtures`);
-
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const rawFeedEntriesFixtures = require('../../../fixtures/feed-entries.json');
-
-    const fixtures: FeedEntry[] = rawFeedEntriesFixtures.map(fixture => {
+    const fixtures: any[] = rawFeedEntriesFixtures.map(fixture => {
       return {
-        id: uuid(fixture.id),
         userId: fixture.userId,
-        postId: uuid(fixture.id),
+        postId: uuid(fixture.postId),
         imageUrl: fixture.imageUrl,
         creatorId: fixture.creatorId,
-        seenAt: fixture.seenAt,
-        createdAt: new Date(fixture.createdAt),
+        createdAt: timeuuid(new Date(fixture.createdAt)),
       };
     });
 

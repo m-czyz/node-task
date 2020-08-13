@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { FeedEntry } from '../feed-entry/feed-entry';
-import { InjectRepository, Repository } from '@iaminfinity/express-cassandra';
+import {
+  InjectRepository,
+  Repository,
+  timeuuid,
+} from '@iaminfinity/express-cassandra';
 
 @Injectable()
 export class FeedService {
@@ -10,7 +14,14 @@ export class FeedService {
   ) {}
 
   findByUserId(userId: string): Promise<FeedEntry[]> {
-    return this.feedEntryRepository.find({ userId }).toPromise();
+    return this.feedEntryRepository
+      .find({
+        userId,
+        createdAt: {
+          $gt: timeuuid(new Date("2017-08-12T23:12:29.216Z")),
+        },
+      })
+      .toPromise();
   }
 
   async loadMultiple(
