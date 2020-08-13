@@ -9,11 +9,10 @@
     * communication with `users` and `feed` via RMQ-RPC
 * users - should handle users related actions, in scope of this task the only action exposed by this service is fetching user by id for api-gateway authorization purposes
     * database mongo chosen due to ease of scaling and non-relation data, port is exposed to host due to development purposes (connecting with external database tools)
-* feed - should handle fetching user feed (in scope of a task), in real life 
-    * casandra is chosen because in real life example user feed will be spammed with inserts and reads
+* feed - should handle fetching user feed (in scope of a task), in a current version it's also storing information about when user fetched the feed last time.
+    * casandra is chosen because feed will be spammed with inserts and reads, it scales well and is prepared for heavy writes scenarios
     * casandra database with exposed port for development purposes, in real env should be only internal
-* posts - should handle all posts related logic but in scope of node task was not necessary to implement at all, because all posts data are pre-loaded inside `feed` service database
-in more complicated scenario it should provide post creation
+* posts - should handle all posts related logic but in scope of node task it was not necessary to implement at all, because all posts data are pre-loaded inside `feed` service database as feed entries`
 * feed-worker - not implement due to nature of task, it was not necessary to insert/update/delete posts (thus to create feed entries). If posts crud was required, then feed-worker must be implemented to handle communication and expensive upserts in cassandra.
   Then it can be implemented like this:
   1. Users add post via -> `POST /posts` in api gateway
@@ -30,6 +29,7 @@ in more complicated scenario it should provide post creation
 - there are minor code duplications, like `RabbitMQModule`. In bigger project there should be something like `@shared` package or common repository with all common modules, interfaces, responses etc
 - there are minor code quality inconsistencies issues regarding a configuration of queues
 - e2e testing is lacking of test for creating new feed entry (command for that is already prepared, but is not connected)
+- databases and rabbit are exposed for host for development purposes
 
 ### Known architecture problems/bottleneck
 - I do not like current implementation of `user-latest-feed-fetch` placed in `feed` service, it is a bottleneck, but I struggled to find a better place where it should be implemented.
