@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { FeedEntry } from '../feed-entry/feed-entry';
+import { FeedEntry } from './feed-entry';
 import {
   FindQuery,
   InjectRepository,
@@ -14,7 +14,7 @@ export class FeedService {
     private readonly feedEntryRepository: Repository<FeedEntry>,
   ) {}
 
-  findByUserIdAndCreatedAt(
+  findByUserIdAndAfterCreatedAt(
     userId: string,
     createdAt?: Date,
   ): Promise<FeedEntry[]> {

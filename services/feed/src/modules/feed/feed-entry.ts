@@ -1,4 +1,4 @@
-import { Entity, Column, IndexColumn } from '@iaminfinity/express-cassandra';
+import { Entity, Column } from '@iaminfinity/express-cassandra';
 import { types } from 'cassandra-driver';
 
 @Entity({

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { FeedService } from '../feed/feed.service';
 import { UserLatestFeedFetchFeedService } from './user-latest-feed-fetch-feed.service';
-import { FeedEntry } from '../feed-entry/feed-entry';
+import { FeedEntry } from '../feed/feed-entry';
 
 @Injectable()
 export class UserFeedService {
@@ -14,7 +14,7 @@ export class UserFeedService {
     const createdAt = await this.userLatestFeedFetchFeedService.getUserLatestFeedFetch(
       userId,
     );
-    const feedEntries = await this.feedService.findByUserIdAndCreatedAt(
+    const feedEntries = await this.feedService.findByUserIdAndAfterCreatedAt(
       userId,
       createdAt,
     );

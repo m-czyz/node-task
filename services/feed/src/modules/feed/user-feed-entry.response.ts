@@ -1,4 +1,4 @@
-import { FeedEntry } from '../feed-entry/feed-entry';
+import { FeedEntry } from './feed-entry';
 
 export class UserFeedEntryResponse {
   postId: string;
