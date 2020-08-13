@@ -6,9 +6,7 @@ import { v4 as uuid4 } from 'uuid';
 
 @Console()
 export class CreateRandomFeedEntryCommand {
-  constructor(
-    private readonly feedService: FeedService,
-  ) {}
+  constructor(private readonly feedService: FeedService) {}
 
   @Command({
     command: 'feed-entry:random <userId>',

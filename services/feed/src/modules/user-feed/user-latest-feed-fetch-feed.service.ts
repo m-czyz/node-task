@@ -44,7 +44,7 @@ export class UserLatestFeedFetchFeedService {
   }
 
   cleanup() {
-    return this.userLatestFeedFetchRepository.truncate().toPromise()
+    return this.userLatestFeedFetchRepository.truncate().toPromise();
   }
 
   private findOneByUser(userId): Promise<UserLatestFeedFetch> {
