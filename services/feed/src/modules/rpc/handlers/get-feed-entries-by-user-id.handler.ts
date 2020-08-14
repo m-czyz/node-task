@@ -1,6 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Nack, RabbitRPC } from '@golevelup/nestjs-rabbitmq';
-import { FeedService } from '../../feed/feed.service';
 import { FeedExchange } from '../../rabbit-mq/exchanges/feed-exchanges.const';
 import { UserFeedEntryResponse } from '../../feed/user-feed-entry.response';
 import { UserFeedService } from '../../user-feed/user-feed.service';
