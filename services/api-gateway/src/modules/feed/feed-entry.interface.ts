@@ -1,1 +1,5 @@
-export interface IFeedEntry {}
+export interface IFeedEntry {
+  postId: string;
+
+  imageUrl: string
+}
