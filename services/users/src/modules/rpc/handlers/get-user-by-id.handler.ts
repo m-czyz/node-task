@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Nack, RabbitRPC } from '@golevelup/nestjs-rabbitmq';
 import { UserService } from '../../user/user.service';
 import { UserResponse } from '../../user/user.response';
+import { UserExchange } from '../../rabbit-mq/exchanges/user-exchanges.const';
 
 type GetUserByIdCommand = {
   userId: string;
@@ -16,7 +17,7 @@ export class GetUserByIdHandler {
   constructor(private readonly userService: UserService) {}
 
   @RabbitRPC({
-    exchange: 'users',
+    exchange: UserExchange.name,
     routingKey: 'rpc-route',
     queue: 'get-user.rpc',
   })
