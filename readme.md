@@ -27,7 +27,7 @@
 ### Known issues
 - project is a monorepo solution, but does not use solution like lerna. In this simple case it was not necessary to use it, but in a large project I would like to have that, or git-submodule option.
 - there are minor code duplications, like `RabbitMQModule`. In bigger project there should be something like `@shared` package or common repository with all common modules, interfaces, responses etc
-- there are minor code quality inconsistencies issues regarding a configuration of queues
+- ~~there are minor code quality inconsistencies issues regarding a configuration of queues~~
 - e2e testing is lacking of test for creating new feed entry (command for that is already prepared, but is not connected)
 - databases and rabbit are exposed for host for development purposes
 
@@ -51,3 +51,9 @@ expected output
     ✓ /feed (GET) and get two feed entries (122 ms)
     ✓ /feed (GET) and get zero feed entries (104 ms)
 ```
+
+### Swagger
+```
+GET /api/
+```
+![image info](docs/assets/swagger.png)
