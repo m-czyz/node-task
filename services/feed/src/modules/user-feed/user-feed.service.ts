@@ -1,25 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { FeedService } from '../feed/feed.service';
-import { UserLatestFeedFetchFeedService } from './user-latest-feed-fetch-feed.service';
-import { FeedEntry } from '../feed/feed-entry';
+import { FeedEntry } from '../feed/feed-entry.entity';
+import { GetFeedEntriesFromDateByUserIdCommand } from '../rpc/command/get-feed-entries-by-user-id.request';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class UserFeedService {
   constructor(
     private readonly feedService: FeedService,
-    private readonly userLatestFeedFetchFeedService: UserLatestFeedFetchFeedService,
+    private readonly userService: UserService,
   ) {}
 
-  async findUserLatestFeed(userId: string): Promise<FeedEntry[]> {
-    const createdAt = await this.userLatestFeedFetchFeedService.getUserLatestFeedFetch(
-      userId,
-    );
+  async findUserFeedFromDate(
+    command: GetFeedEntriesFromDateByUserIdCommand,
+  ): Promise<FeedEntry[]> {
+    // @todo validate/transform
+    const createdAt = command.fromDate ? new Date(command.fromDate) : null;
     const feedEntries = await this.feedService.findByUserIdAndAfterCreatedAt(
-      userId,
+      command.userId,
       createdAt,
     );
-    await this.userLatestFeedFetchFeedService.upsertUserLatestFeedFetch(userId);
+
+    await this.userService.updateUserLatestFeedFetch(
+      command.userId,
+      this.getNewestPostDate(feedEntries),
+    );
 
     return feedEntries;
+  }
+
+  private getNewestPostDate(feedEntries: FeedEntry[]): Date {
+    return feedEntries[0] ? feedEntries[0].createdAt.getDate() : new Date();
   }
 }

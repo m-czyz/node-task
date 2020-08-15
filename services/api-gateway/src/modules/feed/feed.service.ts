@@ -9,18 +9,28 @@ import { FeedExchange } from '../rabbit-mq/exchanges/feed-exchanges.const';
 import { FeedResponse } from './feed.response';
 import { IFeedEntry } from './feed-entry.interface';
 
+type GetUserFeedFromDate = {
+  userId: string;
+  fromDate: string;
+};
+
 @Injectable()
 export class FeedService {
   constructor(private readonly amqpConnection: AmqpConnection) {}
 
-  async getUserFeed(userId: string): Promise<IFeedEntry[]> {
+  async getUserFeed(
+    userId: string,
+    lastFeedFetchDate: string,
+  ): Promise<IFeedEntry[]> {
     try {
+      const message: GetUserFeedFromDate = {
+        userId,
+        fromDate: lastFeedFetchDate,
+      };
       const { feedEntries } = await this.amqpConnection.request<FeedResponse>({
         exchange: FeedExchange.name,
         routingKey: 'feed-rpc-route',
-        payload: {
-          userId,
-        },
+        payload: message,
         timeout: 1000,
       });
 

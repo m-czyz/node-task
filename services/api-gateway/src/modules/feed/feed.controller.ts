@@ -1,8 +1,8 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { FeedService } from './feed.service';
 import { HeaderAuthGuard } from '../auth/header-auth.guard';
-import { User } from '../auth/user.decorator';
-import { IUser } from '../auth/user.interface';
+import { UserDecorator } from '../auth/user.decorator';
+import { User } from '../auth/user.model';
 import { FeedEntryResponse } from './feed-entry.response';
 import { ApiHeader, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { authHeader } from '../auth/auth-header.const';
@@ -22,7 +22,9 @@ export class FeedController {
     type: [FeedEntryResponse],
   })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  getUserFeed(@User() user: IUser): Promise<FeedEntryResponse[]> {
-    return this.feedService.getUserFeed(user.id);
+  getUserFeed(
+    @UserDecorator() { id, lastFeedFetchAt }: User,
+  ): Promise<FeedEntryResponse[]> {
+    return this.feedService.getUserFeed(id, lastFeedFetchAt);
   }
 }

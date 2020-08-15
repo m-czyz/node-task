@@ -1,7 +1,7 @@
 import { Console, Command, createSpinner } from 'nestjs-console';
 import { FeedService } from '../../feed/feed.service';
 import { timeuuid, uuid } from '@iaminfinity/express-cassandra';
-import { FeedEntry } from '../../feed/feed-entry';
+import { FeedEntry } from '../../feed/feed-entry.entity';
 import { v4 as uuid4 } from 'uuid';
 
 @Console()

@@ -5,6 +5,9 @@ import { Document } from 'mongoose';
 export class User extends Document {
   @Prop()
   email: string;
+
+  @Prop({ type: Date })
+  lastFeedFetchDate: Date | undefined;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

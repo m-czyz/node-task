@@ -1,5 +1,5 @@
-import { IUser } from '../auth/user.interface';
+import { User } from '../auth/user.model';
 
 export class GetUserResponse {
-  user: IUser | null;
+  user: User | null;
 }

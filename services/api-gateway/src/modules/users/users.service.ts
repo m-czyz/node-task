@@ -4,7 +4,7 @@ import {
   Logger,
   ServiceUnavailableException,
 } from '@nestjs/common';
-import { IUser } from '../auth/user.interface';
+import { User } from '../auth/user.model';
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 import { UsersExchange } from '../rabbit-mq/exchanges/users-exchanges.const';
 import { GetUserResponse } from './get-user.response';
@@ -13,7 +13,7 @@ import { GetUserResponse } from './get-user.response';
 export class UsersService {
   constructor(private readonly amqpConnection: AmqpConnection) {}
 
-  async findByUserId(userId: string): Promise<IUser> {
+  async findByUserId(userId: string): Promise<User> {
     try {
       const { user } = await this.amqpConnection.request<GetUserResponse>({
         exchange: UsersExchange.name,

@@ -1,10 +1,12 @@
 [
   {
     "_id": "5f34142611b9d42ca2d51d34",
-    "email": "test@test.com"
+    "email": "test@test.com",
+    "lastFeedFetchDate": null
   },
   {
     "_id": "5f34143a50477c4bc7c2d2ec",
-    "email": "test2@test.com"
+    "email": "test2@test.com",
+    "lastFeedFetchDate": null
   }
 ]

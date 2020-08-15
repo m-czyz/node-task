@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Nack, RabbitRPC } from '@golevelup/nestjs-rabbitmq';
 import { UserService } from '../../user/user.service';
-import { UserResponse } from '../../user/user.response';
+import { UserResponse } from '../response/user.response';
 import { UserExchange } from '../../rabbit-mq/exchanges/user-exchanges.const';
 
 type GetUserByIdCommand = {
@@ -26,9 +26,8 @@ export class GetUserByIdHandler {
   }: GetUserByIdCommand): Promise<GetUserByIdResponse | Nack> {
     try {
       const user = await this.userService.findOneById(userId);
-
       return {
-        user,
+        user: user ? UserResponse.fromModel(user) : null,
       };
     } catch (error) {
       Logger.log(error.message, error.stack);

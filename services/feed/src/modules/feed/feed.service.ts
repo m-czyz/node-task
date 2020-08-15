@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { FeedEntry } from './feed-entry';
+import { FeedEntry } from './feed-entry.entity';
 import {
   FindQuery,
   InjectRepository,
