@@ -19,7 +19,6 @@ export class UserService {
         userId,
         lastFeedFetchDate: lastFeedFetchDate.toISOString(),
       };
-      console.log(lastFeedFetchDate);
       await this.amqpConnection.publish(
         'user',
         'user.update-last-feed-fetch-date',

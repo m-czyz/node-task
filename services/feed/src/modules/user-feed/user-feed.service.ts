@@ -14,7 +14,6 @@ export class UserFeedService {
   async findUserFeedFromDate(
     command: GetFeedEntriesFromDateByUserIdCommand,
   ): Promise<FeedEntry[]> {
-    // @todo validate/transform
     const createdAt = command.fromDate ? new Date(command.fromDate) : null;
     const feedEntries = await this.feedService.findByUserIdAndAfterCreatedAt(
       command.userId,
