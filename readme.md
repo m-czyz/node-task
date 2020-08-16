@@ -12,7 +12,7 @@
 * feed - should handle fetching user feed (in scope of a task), in a current version it's also storing information about when user fetched the feed last time.
     * casandra is chosen because feed will be spammed with inserts and reads, it scales well and is prepared for heavy writes scenarios
     * casandra database with exposed port for development purposes, in real env should be only internal
-* posts - should handle all posts related logic but in scope of node task it was not necessary to implement at all, because all posts data are pre-loaded inside `feed` service database as feed entries`
+* posts - should handle all posts related logic but in scope of node task it was not necessary to implement at all, because all posts data are pre-loaded inside `feed` service database as `feed entries`
 * feed-worker - not implement due to nature of task, it was not necessary to insert/update/delete posts (thus to create feed entries). If posts crud was required, then feed-worker must be implemented to handle communication and expensive upserts in cassandra.
   Then it can be implemented like this:
   1. Users add post via -> `POST /posts` in api gateway
@@ -31,12 +31,10 @@
 - e2e testing is lacking of test for creating new feed entry (command for that is already prepared, but is not connected)
 - databases and rabbit are exposed for host for development purposes
 - ~~use of generated mongo ids style, should be uuid4~~
-- validation of data between services is not done.
+- validation of data transfered between services is not done.
 
 ### Known architecture problems/bottleneck
-- ~~I do not like the current implementation of `user-latest-feed-fetch` placed in `feed` service, it is a bottleneck, but I struggled to find a better place where it should be implemented.
-  Now after implementation of this version, I think the correct way will be to store lastFetchAt datetime in User entity, and later on pass date to feed service (user data in already in api-gateway due to auth), 
-  and feed service after sending fetching feed entries should create async task for user service to update lastFetchAt~~
+- ~~I do not like the current implementation of `user-latest-feed-fetch` placed in `feed` service, it is a bottleneck, but I struggled to find a better place where it should be implemented. Now after implementation of this version, I think the correct way will be to store lastFetchAt datetime in User entity, and later on pass date to feed service (user data in already in api-gateway due to auth), and feed service after sending fetching feed entries should create async task for user service to update lastFetchAt~~
 
 
 ### Run build environment and run e2e test
