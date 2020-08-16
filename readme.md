@@ -15,7 +15,7 @@
 * posts - should handle all posts related logic but in scope of node task it was not necessary to implement at all, because all posts data are pre-loaded inside `feed` service database as `feed entries`
 * feed-worker - not implement due to nature of task, it was not necessary to insert/update/delete posts (thus to create feed entries). If posts crud was required, then feed-worker must be implemented to handle communication and expensive upserts in cassandra.
   Then it can be implemented like this:
-  1. Users add post via -> `POST /posts` in api gateway
+  1. User add post via -> `POST /posts` in api gateway
   2. Gateway sends RMQ task to `posts` service
   3. Post service consumes event and fetch related users to the post (from post service by RMQ-RPC) and sends RMQ task to `feed`
   4. Feed service consumes event and create tasks for feed workers
@@ -28,7 +28,7 @@
 - project is a monorepo solution, but does not use solution like lerna. In this simple case it was not necessary to use it, but in a large project I would like to have that, or git-submodule option.
 - there are minor code duplications, like `RabbitMQModule`. In bigger project there should be something like `@shared` package or common repository with all common modules, interfaces, responses etc
 - ~~there are minor code quality inconsistencies issues regarding a configuration of queues~~
-- e2e testing is lacking of test for creating new feed entry (command for that is already prepared, but is not connected)
+- ~~e2e testing is lacking of test for creating new feed entry (command for that is already prepared, but is not connected)~~
 - databases and rabbit are exposed for host for development purposes
 - ~~use of generated mongo ids style, should be uuid4~~
 - validation of data transfered between services is not done.
@@ -51,6 +51,14 @@ expected output
     ✓ /feed (GET) and get two feed entries (92 ms)
     ✓ /feed (GET) and get zero feed entries (1085 ms)
     ✓ as user with empty feed /feed (GET) and get zero feed entries (77 ms)
+
+...
+
+ PASS  test/after-feed-upsert.e2e-spec.ts
+  FeedController (e2e)
+    ✓ after seeding /feed (GET) and get one feed entry (287 ms)
+    ✓ after seeding /feed (GET) and zero feed entries (79 ms)
+
 ```
 
 ### Swagger
