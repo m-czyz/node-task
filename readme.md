@@ -30,7 +30,7 @@
 - ~~there are minor code quality inconsistencies issues regarding a configuration of queues~~
 - e2e testing is lacking of test for creating new feed entry (command for that is already prepared, but is not connected)
 - databases and rabbit are exposed for host for development purposes
-- use of generated mongo ids style, should be uuid4
+- ~~use of generated mongo ids style, should be uuid4~~
 - validation of data between services is not done.
 
 ### Known architecture problems/bottleneck
@@ -47,11 +47,12 @@ chmod -R +x scripts && ./scripts/down.sh && ./scripts/up.sh && ./scripts/seed.sh
 expected output
 
 ```
- PASS  test/app.e2e-spec.ts
+ PASS  test/app.e2e-spec.ts (5.047 s)
   FeedController (e2e)
-    ✓ /feed (GET) and should fail on auth (278 ms)
-    ✓ /feed (GET) and get two feed entries (122 ms)
-    ✓ /feed (GET) and get zero feed entries (104 ms)
+    ✓ /feed (GET) and should fail on auth (281 ms)
+    ✓ /feed (GET) and get two feed entries (92 ms)
+    ✓ /feed (GET) and get zero feed entries (1085 ms)
+    ✓ as user with empty feed /feed (GET) and get zero feed entries (77 ms)
 ```
 
 ### Swagger

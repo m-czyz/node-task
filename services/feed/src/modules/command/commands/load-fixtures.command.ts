@@ -20,7 +20,7 @@ export class LoadFixturesCommand {
 
     const fixtures: FeedEntry[] = rawFeedEntriesFixtures.map(fixture => {
       return {
-        userId: fixture.userId,
+        userId: uuid(fixture.userId),
         postId: uuid(fixture.postId),
         imageUrl: fixture.imageUrl,
         createdAt: timeuuid(new Date(fixture.createdAt)),
@@ -31,6 +31,6 @@ export class LoadFixturesCommand {
 
     spin.succeed('Loading done');
 
-    console.log(feedEntries);
+    console.log(rawFeedEntriesFixtures);
   }
 }

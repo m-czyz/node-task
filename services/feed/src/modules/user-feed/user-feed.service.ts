@@ -15,20 +15,15 @@ export class UserFeedService {
     command: GetFeedEntriesFromDateByUserIdCommand,
   ): Promise<FeedEntry[]> {
     const createdAt = command.fromDate ? new Date(command.fromDate) : null;
-    const feedEntries = await this.feedService.findByUserIdAndAfterCreatedAt(
+    const now = new Date();
+    const feedEntries = await this.feedService.findByUserIdAndBetweenCreatedAtAndNow(
       command.userId,
+      now,
       createdAt,
     );
 
-    await this.userService.updateUserLatestFeedFetch(
-      command.userId,
-      this.getNewestPostDate(feedEntries),
-    );
+    await this.userService.updateUserLatestFeedFetch(command.userId, now);
 
     return feedEntries;
-  }
-
-  private getNewestPostDate(feedEntries: FeedEntry[]): Date {
-    return feedEntries[0] ? feedEntries[0].createdAt.getDate() : new Date();
   }
 }

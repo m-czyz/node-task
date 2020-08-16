@@ -4,8 +4,8 @@ import {
   FindQuery,
   InjectRepository,
   Repository,
-  timeuuid,
-} from '@iaminfinity/express-cassandra';
+  timeuuid, uuid
+} from "@iaminfinity/express-cassandra";
 
 @Injectable()
 export class FeedService {
@@ -14,18 +14,21 @@ export class FeedService {
     private readonly feedEntryRepository: Repository<FeedEntry>,
   ) {}
 
-  findByUserIdAndAfterCreatedAt(
+  findByUserIdAndBetweenCreatedAtAndNow(
     userId: string,
+    now: Date,
     createdAt?: Date,
   ): Promise<FeedEntry[]> {
     const query: FindQuery<FeedEntry> = {
-      userId,
+      userId: uuid(userId),
+    };
+
+    query.createdAt = {
+      $lte: timeuuid(now),
     };
 
     if (createdAt) {
-      query.createdAt = {
-        $gt: timeuuid(createdAt),
-      };
+      query.createdAt.$gt = timeuuid(createdAt);
     }
 
     return this.feedEntryRepository.find(query).toPromise();

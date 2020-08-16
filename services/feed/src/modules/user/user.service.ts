@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
+import { UsersExchange } from '../rabbit-mq/exchanges/users-exchanges.const';
 
 type UpdateUserLatestFeedFetchMessage = {
   userId: string;
@@ -20,12 +21,16 @@ export class UserService {
         lastFeedFetchDate: lastFeedFetchDate.toISOString(),
       };
       await this.amqpConnection.publish(
-        'user',
+        UsersExchange.name,
         'user.update-last-feed-fetch-date',
         message,
       );
     } catch (error) {
-      Logger.error('RabbitMQ error', error.stack, 'RabbitMQModule Communication');
+      Logger.error(
+        'RabbitMQ error',
+        error.stack,
+        'RabbitMQModule Communication',
+      );
     }
   }
 }

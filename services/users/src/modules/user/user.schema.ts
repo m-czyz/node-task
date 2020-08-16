@@ -3,6 +3,9 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class User extends Document {
+  @Prop({ type: String })
+  _id: string;
+
   @Prop()
   email: string;
 

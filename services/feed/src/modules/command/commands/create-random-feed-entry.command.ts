@@ -17,7 +17,7 @@ export class CreateRandomFeedEntryCommand {
     spin.start(`Creating new feed entry for user: ${userId}`);
 
     const feedEntry: FeedEntry = {
-      userId,
+      userId: uuid(userId),
       postId: uuid(),
       imageUrl: `https://via.placeholder.com/${uuid4()}`,
       createdAt: timeuuid(new Date()),

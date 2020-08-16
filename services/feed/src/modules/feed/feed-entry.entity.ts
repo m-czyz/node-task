@@ -10,9 +10,9 @@ import { types } from 'cassandra-driver';
 })
 export class FeedEntry {
   @Column({
-    type: 'text',
+    type: 'uuid',
   })
-  userId: string;
+  userId: types.Uuid;
 
   @Column({
     type: 'uuid',

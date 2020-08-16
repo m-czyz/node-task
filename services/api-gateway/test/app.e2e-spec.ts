@@ -25,15 +25,26 @@ describe('FeedController (e2e)', () => {
   it('/feed (GET) and get two feed entries', () => {
     return request(app.getHttpServer())
       .get('/feed')
-      .set('user', '5f34142611b9d42ca2d51d34')
+      .set('user', 'f5af320c-6b12-48cb-9169-63f2cf326baa')
       .expect(200)
       .expect(res => expect(res.body.length).toBe(2));
   });
 
-  it('/feed (GET) and get zero feed entries', () => {
+  it('/feed (GET) and get zero feed entries', async () => {
+    // add extra time for user service processing
+    await new Promise(r => setTimeout(r, 1000));
+
     return request(app.getHttpServer())
       .get('/feed')
-      .set('user', '5f34142611b9d42ca2d51d34')
+      .set('user', 'f5af320c-6b12-48cb-9169-63f2cf326baa')
+      .expect(200)
+      .expect(res => expect(res.body.length).toBe(0));
+  });
+
+  it('as user with empty feed /feed (GET) and get zero feed entries', async () => {
+    return request(app.getHttpServer())
+      .get('/feed')
+      .set('user', '364565e4-c94d-409e-8486-e32da39fe5ae')
       .expect(200)
       .expect(res => expect(res.body.length).toBe(0));
   });

@@ -22,6 +22,6 @@ export class LoadFixturesCommand {
 
     spin.succeed('Loading done');
 
-    console.log(users);
+    console.log(usersFixtures);
   }
 }
