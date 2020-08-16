@@ -1,5 +1,8 @@
 # Node task
 
+### Final architecture
+![image info](docs/assets/final-diagram.png)
+
 ### Early Concept
 ![image info](docs/assets/schema-01.png)
 
@@ -31,7 +34,7 @@
 - ~~e2e testing is lacking of test for creating new feed entry (command for that is already prepared, but is not connected)~~
 - databases and rabbit are exposed for host for development purposes
 - ~~use of generated mongo ids style, should be uuid4~~
-- validation of data transfered between services is not done.
+- validation of data transfered between services is not done, it can be done by class-validator
 
 ### Known architecture problems/bottleneck
 - ~~I do not like the current implementation of `user-latest-feed-fetch` placed in `feed` service, it is a bottleneck, but I struggled to find a better place where it should be implemented. Now after implementation of this version, I think the correct way will be to store lastFetchAt datetime in User entity, and later on pass date to feed service (user data in already in api-gateway due to auth), and feed service after sending fetching feed entries should create async task for user service to update lastFetchAt~~
